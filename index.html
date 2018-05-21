@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="generator" content="pandoc">
   <meta name="author" content="Ivan Lazar Miljenovic" />
-  <title>Slideshows with Pandoc on Github</title>
+  <title>I Streamed a Stream</title>
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
@@ -95,58 +95,214 @@ code span.wa { color: #7f9f7f; font-weight: bold; } /* Warning */
     <div class="slides">
 
 <section>
-    <h1 class="title">Slideshows with Pandoc on Github</h1>
+    <h1 class="title">I Streamed a Stream</h1>
     <h2 class="author">Ivan Lazar Miljenovic</h2>
-    <h3 class="date">17 January, 2017</h3>
+    <h3 class="date">23 May, 2018</h3>
 </section>
 
-<section><section id="about-this-configuration" class="title-slide slide level1"><h1>About this configuration</h1></section><section id="headings" class="slide level2">
-<h2>Headings</h2>
+<section><section id="why-do-this-code-jam" class="title-slide slide level1"><h1>Why do this Code-Jam?</h1></section><section id="whats-wrong-with-the-status-quo" class="slide level2">
+<h2>What’s wrong with the status-quo?</h2>
 <ul>
-<li><p>Pandoc puts top-level headings on their own page</p>
+<li class="fragment">Monads are great for specifying I/O.</li>
+<li class="fragment">But default lazy I/O in Haskell is broken.
 <ul>
-<li>I use setext style headers for them to help make them stand out in the markdown</li>
-</ul></li>
-<li><p>Level-2 headings create new slides</p>
-<ul>
-<li>I prefer atx style headers for those to help add in metadata (e.g. images)</li>
-</ul></li>
-<li><p>You can use other headings as well</p>
-<ul>
-<li>Level-6 headings have been configured in the CSS to help show up as image attribution.</li>
+<li class="fragment">(Except in certain specific cases.)</li>
+<li class="fragment">(Maybe not broken, but difficult to get right.)</li>
 </ul></li>
 </ul>
-</section><section id="image-based-slide" class="slide level2" data-background="images/haskell.png" data-background-color="white">
-<h2>Image-based slide</h2>
+</section><section id="whats-the-solution" class="slide level2">
+<h2>What’s the solution?</h2>
+<div class="fragment">
+<p>Stream Processing!</p>
+</div>
+<div class="fragment">
+<p>… no, not parallel programming …</p>
+</div>
+<div class="fragment">
+<p>… and not just for Haskell …</p>
+</div>
+</section><section class="slide level2">
+
+<blockquote>
+<p>[…] P J Landin’s original use for streams was to model the histories of loop variables, but he also observed that streams could have been used as a model for I/O in ALGOL 60.</p>
+<p>– <em>A Survey Of Stream Processing, R. Stephens, 1995</em></p>
+</blockquote>
+</section><section class="slide level2">
+
+<blockquote>
+<p><em>Stream processing</em> defines a pipeline of operators that transform, combine, or reduce (even to a single scalar) large amounts of data. Characteristically, data is accessed strictly linearly rather than randomly and repeatedly – and processed uniformly. The upside of the limited expressiveness is the opportunity to process large amount of data efficiently, in constant and small space.</p>
+<p>– <em>Oleg Kiselyov</em>, <a href="http://okmij.org/ftp/Streams.html" class="uri">http://okmij.org/ftp/Streams.html</a></p>
+</blockquote>
+</section><section id="possible-implementations" class="slide level2">
+<h2>Possible Implementations</h2>
 <ul>
-<li><p>This slide has a background image</p></li>
-<li><p>You may need to put attribution last (Pandoc gets confused sometimes).</p></li>
+<li class="fragment">Iteratees (Oleg Kiselyov, 2008)</li>
+<li class="fragment"><code>iteratee</code> (John Lato, 2009 – 2014)</li>
+<li class="fragment"><code>enumerator</code> (John Millikin, 2010 – 2011)</li>
+<li class="fragment"><code>conduit</code> (Michael Snoyman, 2011 –)</li>
+<li class="fragment"><code>pipes</code> (Gabriel Gonzalez, 2012 –)</li>
 </ul>
-<h6 id="attribution-for-image">Attribution for image</h6>
-</section><section id="speaker-notes" class="slide level2">
-<h2>Speaker notes</h2>
+</section><section class="slide level2">
+
 <ul>
-<li><p>Pandoc has in-built support for speaker notes with reveal.js (hit <code>s</code> to reveal them).</p></li>
-<li><div class="sourceCode" id="cb1"><pre class="sourceCode markdown"><code class="sourceCode markdown"><a class="sourceLine" id="cb1-1" data-line-number="1">::: notes</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"></a>
-<a class="sourceLine" id="cb1-3" data-line-number="3">* <span class="fl">Note 1</span></a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="fl">* Note 2</span></a>
-<a class="sourceLine" id="cb1-5" data-line-number="5"></a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">:::</a></code></pre></div></li>
+<li class="fragment"><code>machines</code> (Edward Kmett, 2012 –)</li>
+<li class="fragment"><code>io-streams</code> (Gregory Collins, 2013 –)</li>
+<li class="fragment"><code>quiver</code> (Patryk Zadarnowski, 2015)</li>
+<li class="fragment"><code>streaming</code> (Michael Thompson, 2015 –)</li>
+<li class="fragment"><code>streamly</code> (Harendra Kumar, 2017 –)</li>
 </ul>
-<aside class="notes">
+</section><section id="why-streaming" class="slide level2">
+<h2>Why <code>streaming</code>?</h2>
 <ul>
-<li>Note 1</li>
-<li>Note 2</li>
+<li class="fragment">It’s simpler!</li>
+<li class="fragment"><code>Stream (Of a) m r ≈ m ([a], r)</code></li>
+<li class="fragment">Standard function composition! No need for new operators!</li>
+<li class="fragment">Gaining popularity for cases not needing extra power of pipes, conduit, etc.</li>
 </ul>
-</aside>
-</section><section id="other" class="slide level2">
-<h2>Other</h2>
+</section><section id="a-nice-example" class="slide level2">
+<h2>A nice example</h2>
+<div class="sourceCode" id="cb1" style="font-size:70%"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co">-- | Once authenticated, send the data through to the API.</span></a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="ot">sendData ::</span> <span class="dt">Client</span> <span class="dt">UploadAPI</span> <span class="ot">-&gt;</span> <span class="dt">Options</span> <span class="ot">-&gt;</span> <span class="dt">IO</span> ()</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3">sendData f opts <span class="fu">=</span></a>
+<a class="sourceLine" id="cb1-4" data-line-number="4">  withBinaryFileContents (dataFile opts) <span class="fu">$</span></a>
+<a class="sourceLine" id="cb1-5" data-line-number="5">    withErr</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">    <span class="fu">.</span> withClientErrors     <span class="co">-- Handle errors from sending the data</span></a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">    <span class="fu">.</span> tryStreamData f opts <span class="co">-- Send data to API</span></a>
+<a class="sourceLine" id="cb1-8" data-line-number="8">    <span class="fu">.</span> withClientErrors     <span class="co">-- Handle errors from parsing the CSV</span></a>
+<a class="sourceLine" id="cb1-9" data-line-number="9">    <span class="fu">.</span> transformData        <span class="co">-- Convert the CSV values to what we need</span></a>
+<a class="sourceLine" id="cb1-10" data-line-number="10">    <span class="fu">.</span> decodeByName         <span class="co">-- Convert the file contents into DBData</span></a>
+<a class="sourceLine" id="cb1-11" data-line-number="11">  <span class="kw">where</span></a>
+<a class="sourceLine" id="cb1-12" data-line-number="12">    <span class="co">-- | If some high-level CSV parsing exception occurs, print it.</span></a>
+<a class="sourceLine" id="cb1-13" data-line-number="13"><span class="ot">    withErr ::</span> <span class="dt">ExceptT</span> <span class="dt">CsvParseException</span> <span class="dt">IO</span> () <span class="ot">-&gt;</span> <span class="dt">IO</span> ()</a>
+<a class="sourceLine" id="cb1-14" data-line-number="14">    withErr <span class="fu">=</span> (either (liftIO <span class="fu">.</span> print) return <span class="fu">=&lt;&lt;</span>) <span class="fu">.</span> runExceptT</a></code></pre></div>
+</section><section id="a-not-so-nice-example" class="slide level2">
+<h2>A not-so-nice example</h2>
+<div class="sourceCode" id="cb2" style="font-size:70%"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="co">-- | Take a stream of values and convert it into a stream of streams,</span></a>
+<a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co">--   each of which has no two values with the same result of the</span></a>
+<a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co">--   provided function.</span></a>
+<a class="sourceLine" id="cb2-4" data-line-number="4"><span class="ot">disjoint ::</span> forall a b m r<span class="fu">.</span> (<span class="dt">Eq</span> b, <span class="dt">Hashable</span> b, <span class="dt">Monad</span> m)</a>
+<a class="sourceLine" id="cb2-5" data-line-number="5">            <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> <span class="dt">Stream</span> (<span class="dt">Of</span> a) m r</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">            <span class="ot">-&gt;</span> <span class="dt">Stream</span> (<span class="dt">Stream</span> (<span class="dt">Of</span> a) m) m r</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7">disjoint f <span class="fu">=</span> loop</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">  <span class="kw">where</span></a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">    <span class="co">-- Keep finding disjoint streams until the stream is exhausted.</span></a>
+<a class="sourceLine" id="cb2-10" data-line-number="10">    loop stream <span class="fu">=</span> S.effect <span class="fu">$</span> <span class="kw">do</span></a>
+<a class="sourceLine" id="cb2-11" data-line-number="11">      e <span class="ot">&lt;-</span> S.next stream</a>
+<a class="sourceLine" id="cb2-12" data-line-number="12">      return <span class="fu">$</span> <span class="kw">case</span> e <span class="kw">of</span></a>
+<a class="sourceLine" id="cb2-13" data-line-number="13">                 <span class="dt">Left</span> r <span class="ot">-&gt;</span> return r</a>
+<a class="sourceLine" id="cb2-14" data-line-number="14">                 <span class="dt">Right</span> (a, stream&#39;) <span class="ot">-&gt;</span> S.wrap <span class="fu">$</span></a>
+<a class="sourceLine" id="cb2-15" data-line-number="15">                   loop <span class="fu">&lt;$&gt;</span> (S.yield a <span class="fu">*&gt;</span> nextDisjoint (f a) stream&#39;)</a>
+<a class="sourceLine" id="cb2-16" data-line-number="16"></a>
+<a class="sourceLine" id="cb2-17" data-line-number="17">    <span class="co">-- Get the next disjoint stream; i.e. split the stream when the</span></a>
+<a class="sourceLine" id="cb2-18" data-line-number="18">    <span class="co">-- first duplicate value is found.</span></a>
+<a class="sourceLine" id="cb2-19" data-line-number="19">    <span class="co">--</span></a>
+<a class="sourceLine" id="cb2-20" data-line-number="20">    <span class="co">-- Provided is an initial seed for values to be compared against.</span></a>
+<a class="sourceLine" id="cb2-21" data-line-number="21"><span class="ot">    nextDisjoint ::</span> b <span class="ot">-&gt;</span> <span class="dt">Stream</span> (<span class="dt">Of</span> a) m r</a>
+<a class="sourceLine" id="cb2-22" data-line-number="22">                    <span class="ot">-&gt;</span> <span class="dt">Stream</span> (<span class="dt">Of</span> a) m (<span class="dt">Stream</span> (<span class="dt">Of</span> a) m r)</a>
+<a class="sourceLine" id="cb2-23" data-line-number="23">    nextDisjoint initB <span class="fu">=</span> S.breakWhen step (<span class="dt">False</span>, HS.singleton initB)</a>
+<a class="sourceLine" id="cb2-24" data-line-number="24">                                     fst id</a>
+<a class="sourceLine" id="cb2-25" data-line-number="25">      <span class="kw">where</span></a>
+<a class="sourceLine" id="cb2-26" data-line-number="26">        <span class="co">-- breakWhen does the test /after/ the step, so we use an</span></a>
+<a class="sourceLine" id="cb2-27" data-line-number="27">        <span class="co">-- extra boolean to denote if it&#39;s broken.</span></a>
+<a class="sourceLine" id="cb2-28" data-line-number="28">        <span class="co">-- PRECONDITION: before calling set, the boolean is True</span></a>
+<a class="sourceLine" id="cb2-29" data-line-number="29">        step (_, set) a <span class="fu">=</span> (HS.member b set, HS.insert b set)</a>
+<a class="sourceLine" id="cb2-30" data-line-number="30">          <span class="kw">where</span></a>
+<a class="sourceLine" id="cb2-31" data-line-number="31">            b <span class="fu">=</span> f a</a></code></pre></div>
+</section></section>
+<section><section id="exercises" class="title-slide slide level1"><h1>Exercises</h1></section><section id="where-to-get-them" class="slide level2">
+<h2>Where to get them?</h2>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="fu">git</span> clone https://github.com/ivan-m/LambdaJAM-Streaming-exercises.git</a></code></pre></div>
+</section><section id="how-to-do-them" class="slide level2">
+<h2>How to do them?</h2>
+<p>Look at that convenient README!</p>
+</section></section>
+<section><section id="exercise-0" class="title-slide slide level1"><h1>Exercise 0</h1></section><section id="build-yourself-a-stream" class="slide level2">
+<h2>Build yourself a Stream!</h2>
+<p>Time for some basic Haskell!</p>
+<div class="fragment">
+<p>… does anyone want to do this?</p>
+</div>
+</section><section id="results" class="slide level2">
+<h2>Results</h2>
 <ul>
-<li><p>reveal.js settings - including specification of the CSS file - are set in a YAML block at the bottom of the markdown file.</p></li>
-<li><p>You can also abuse YAML blocks to add in comments (e.g. to help organise your file, or have a bibliography section with all your links).</p></li>
+<li class="fragment">Basic understanding of the <code>Stream</code> type
+<ul>
+<li class="fragment">Lists interspered with monads!</li>
+</ul></li>
+<li class="fragment">How to manually decompose it</li>
+<li class="fragment">Hopefully a desire not to manually decompose in practice.</li>
 </ul>
 </section></section>
+<section><section id="exercise-1" class="title-slide slide level1"><h1>Exercise 1</h1></section><section id="functor-streaming" class="slide level2">
+<h2>Functor Streaming</h2>
+<p>What’s with that <code>f</code> in <code>Stream f m r</code>?</p>
+</section><section id="results-1" class="slide level2">
+<h2>Results</h2>
+<ul>
+<li class="fragment">Know why <code>Stream</code> can take any functor</li>
+<li class="fragment">Basic understanding of how <code>Stream</code>s can contain other <code>Stream</code>s</li>
+<li class="fragment">How <code>Stream</code>s compare to pipes and conduits.</li>
+</ul>
+</section></section>
+<section><section id="exercise-2" class="title-slide slide level1"><h1>Exercise 2</h1></section><section id="streams-of-streams" class="slide level2">
+<h2>Streams of Streams</h2>
+<ul>
+<li><code class="sourceCode haskell"><span class="dt">Stream</span> f m (<span class="dt">Stream</span> f m r)</code>
+<ul>
+<li>Leftovers (ala Conduit)</li>
+</ul></li>
+<li><code class="sourceCode haskell"><span class="dt">Stream</span> f (<span class="dt">Stream</span> g m) r</code>
+<ul>
+<li>A stream created as a Monadic effect</li>
+</ul></li>
+<li><code class="sourceCode haskell"><span class="dt">Stream</span> (<span class="dt">Stream</span> f m) m r</code>
+<ul>
+<li>An actual stream of streams (e.g. grouping).</li>
+</ul></li>
+<li><code class="sourceCode haskell"><span class="dt">Stream</span> (<span class="dt">Of</span> (<span class="dt">Stream</span> f m v)) m r</code>
+<ul>
+<li>Don’t think this is useful</li>
+</ul></li>
+<li><code class="sourceCode haskell"><span class="dt">Stream</span> (<span class="dt">ByteString</span> m) m r</code>
+<ul>
+<li>Using <code>streaming-bytestring</code>.</li>
+</ul></li>
+</ul>
+</section><section id="results-2" class="slide level2">
+<h2>Results</h2>
+<ul>
+<li class="fragment">Know why we might want to compose <code>Stream</code>s in different ways.</li>
+</ul>
+</section></section>
+<section><section id="exercise-3" class="title-slide slide level1"><h1>Exercise 3</h1></section><section id="streams-are-powerful-lists" class="slide level2">
+<h2>Streams are powerful lists</h2>
+<div class="fragment">
+<p>Including the infamous infinite Fibonacci definition!</p>
+</div>
+</section><section id="results-3" class="slide level2">
+<h2>Results</h2>
+<ul>
+<li class="fragment">I can stop telling you how <code>Stream</code>s are list-like.</li>
+</ul>
+</section></section>
+<section><section id="exercise-4" class="title-slide slide level1"><h1>Exercise 4</h1></section><section id="how-to-do-io" class="slide level2">
+<h2>How to do I/O</h2>
+<p>The whole reason we started this!</p>
+</section><section id="results-4" class="slide level2">
+<h2>Results</h2>
+<ul>
+<li class="fragment">How to do I/O with <code>Stream</code>s.</li>
+<li class="fragment">Resource management best practices.</li>
+</ul>
+</section></section>
+<section><section id="exercise-5" class="title-slide slide level1"><h1>Exercise 5</h1></section><section id="tying-it-all-together" class="slide level2">
+<h2>Tying it all together!</h2>
+<p>Try to actually do something with what you’ve (hopefully) learnt today!</p>
+</section><section id="results-5" class="slide level2">
+<h2>Results</h2>
+<img data-src="images/fireworks.jpg" title="fig:" alt="Celebrate" id="id" class="stretch" />
+</section></section>
+<section><section id="stream-on" class="title-slide slide level1" data-background="images/stream.jpg" data-background-color="white"><h1>Stream on!</h1></section></section>
     </div>
   </div>
 
