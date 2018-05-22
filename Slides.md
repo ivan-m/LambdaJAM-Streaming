@@ -245,7 +245,9 @@ today!
 Results
 -------
 
-Stream on!
+![Celebrate](images/fireworks.jpg){ #id .stretch }
+
+Stream on! {data-background="images/stream.jpg" data-background-color="white"}
 ==========
 
 ---
