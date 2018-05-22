@@ -22,6 +22,11 @@
     background: ivory;
 }
 
+.reveal blockquote {
+    width: 100%;
+    font-size: 75%;
+}
+
 .reveal pre {
     width: 100%;
     font-size: 0.8em;
