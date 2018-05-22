@@ -138,7 +138,7 @@ Exercises
 Where to get them?
 ------------------
 
-```bash
+```{.bash style="font-size:70%"}
 git clone https://github.com/ivan-m/LambdaJAM-Streaming-exercises.git
 ```
 
